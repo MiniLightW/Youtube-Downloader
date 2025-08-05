@@ -24,5 +24,5 @@ pip install pytubefix
 
 
 # Quick run example : (replace XXX in example by valid data from real URL)
-& C:/Users/damin/AppData/Local/Programs/Python/Python313/python.exe d:/DEV/Python/Youtube/Youtube-Downloader-main/youtube-download.py -t 'https://www.youtube.com/shorts/XXX'
-& C:/Users/damin/AppData/Local/Programs/Python/Python313/python.exe d:/DEV/Python/Youtube/Youtube-Downloader-main/youtube-download.py -t 'https://www.youtube.com/watch?v=XXX'
+- & C:/Users/damin/AppData/Local/Programs/Python/Python313/python.exe d:/DEV/Python/Youtube/Youtube-Downloader-main/youtube-download.py -t 'https://www.youtube.com/shorts/XXX'
+- & C:/Users/damin/AppData/Local/Programs/Python/Python313/python.exe d:/DEV/Python/Youtube/Youtube-Downloader-main/youtube-download.py -t 'https://www.youtube.com/watch?v=XXX'
