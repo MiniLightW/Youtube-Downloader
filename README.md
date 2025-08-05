@@ -7,3 +7,22 @@ Download HD YouTube Videos
 
 
 This script will download & combine the highest quality audio & video files using pytube.
+
+
+# Quick INSTALL (check URL data if doens't work anymore)
+(procedure for windows only)
+-1- install ffmpeg
+- open cmd in administrator and run this :
+choco install ffmpeg
+=> hen follow instruction with Yes or No...
+
+-1- install pytubefix / data here : https://korben.info/pytubefix-telechargement-videos-youtube-python.html
+=> pytube is no loger functionnal, we use pytubefix now :
+- open cmd in administrator and run this :
+pip install pytubefix
+
+
+# Quick run example : (replace XXX in example by valid data from real URL)
+& C:/Users/damin/AppData/Local/Programs/Python/Python313/python.exe d:/DEV/Python/Youtube/Youtube-Downloader-main/youtube-download.py -t 'https://www.youtube.com/shorts/XXX'
+& C:/Users/damin/AppData/Local/Programs/Python/Python313/python.exe d:/DEV/Python/Youtube/Youtube-Downloader-main/youtube-download.py -t 'https://www.youtube.com/watch?v=XXX'
+
