@@ -3,7 +3,7 @@
 Download HD YouTube Videos
 
 - Requires [ffmpeg](https://www.ffmpeg.org/download.html) to be installed on your computer
-- Requires [pytubefix](https://korben.info/pytubefix-telechargement-videos-youtube-python.html)
+- Requires [pytubefix](https://korben.info/pytubefix-telechargement-videos-youtube-python.html) as python installed library
 - Probably only works on Windows
 
 
