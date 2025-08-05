@@ -11,6 +11,7 @@ YouTube Video Downloader Script
 import argparse
 from pytubefix import YouTube
 from pytubefix.cli import on_progress
+from pytubefix import Playlist
 import os
 import re
 
@@ -73,7 +74,24 @@ def main():
         if not output_path:
             output_path = '.'
 
-    download_youtube_video(args.target, output_path, output_filename)
+    motif = r"\&list="
+    res = re.search(motif, args.target)
+    if res:
+        print("This is a playlist URL, please use the playlist downloader instead.")
+        pl = Playlist(args.target)
+        print("All following videos will be downloaded:")
+        for video in pl.videos:
+            print(video.title + " " + video.watch_url)
+        input("Press Enter to continue... or Ctrl+C to abbort.")
+        for video in pl.videos:
+            print(video.title + " " + video.watch_url)
+            """
+            ys = video.streams.get_audio_only()
+            ys.download()
+            """
+            download_youtube_video(video.watch_url, output_path, output_filename)
+    else:
+        download_youtube_video(args.target, output_path, output_filename)
 
 if __name__ == "__main__":
     main()
