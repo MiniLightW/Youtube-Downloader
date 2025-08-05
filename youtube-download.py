@@ -10,6 +10,7 @@ YouTube Video Downloader Script
 
 import argparse
 from pytubefix import YouTube
+from pytubefix.cli import on_progress
 import os
 import re
 
@@ -25,7 +26,7 @@ def ensure_mp4_extension(filename):
 
 def download_youtube_video(url, output_path='.', output_filename=None):
     try:
-        yt = YouTube(url)
+        yt = YouTube(url, on_progress_callback=on_progress)
 
         # Determine the output filename
         if output_filename is None:
