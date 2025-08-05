@@ -9,7 +9,7 @@ YouTube Video Downloader Script
 """
 
 import argparse
-from pytube import YouTube
+from pytubefix import YouTube
 import os
 import re
 
