@@ -25,7 +25,7 @@ def ensure_mp4_extension(filename):
         filename += '.mp4'
     return filename
 
-def download_youtube_video(url, output_path='.', output_filename=None, audio_tag=None):
+def download_youtube_video(url, output_path='.', output_filename=None, audio_tag=None, first_audio_tag=False):
     try:
         yt = YouTube(url, on_progress_callback=on_progress)
 
@@ -45,14 +45,20 @@ def download_youtube_video(url, output_path='.', output_filename=None, audio_tag
 
         # Get the highest resolution video-only stream
         video_stream = yt.streams.filter(adaptive=True, file_extension='mp4', only_video=True).order_by('resolution').desc().first()
-        
+        print (f"[video itag: {video_stream.itag}]")
+
         # Get the highest quality audio stream
-        if not audio_tag:
+        if first_audio_tag:
+            audio_stream = yt.streams.order_by('itag').asc().first()
+        elif not audio_tag:
             audio_stream = yt.streams.filter(adaptive=True, file_extension='mp4', only_audio=True).order_by('abr').desc().first()
         else:
             audio_stream = yt.streams.get_by_itag(audio_tag)
             if not audio_stream:
                 raise ValueError(f"No audio stream found with tag '{audio_tag}'")
+        print (f"[audio itag: {audio_stream.itag}]")
+
+        exit()
 
         # Download video and audio streams
         print(f"Downloading video: {yt.title}")
@@ -76,9 +82,10 @@ def download_youtube_video(url, output_path='.', output_filename=None, audio_tag
 
 def main():
     parser = argparse.ArgumentParser(description="Download YouTube videos in the highest quality")
-    parser.add_argument("-t",  "--target",   help="URL of the YouTube video", required=True)
-    parser.add_argument("-at", "--audiotag", help="Forced audio tag (no playlist)", required=False)
-    parser.add_argument("-o",  "--output",   help="Optional output path and filename", required=False)
+    parser.add_argument("-t",  "--target",         help="URL of the YouTube video", required=True)
+    parser.add_argument("-at", "--audioItag",      help="Forced audio tag (no playlist)", required=False)
+    parser.add_argument("-af", "--audioForceItag", help="Forced audio first audio tag", action="store_true")
+    parser.add_argument("-o",  "--output",         help="Optional output path and filename", required=False)
     args = parser.parse_args()
 
     # If the output argument is provided, split it into path and filename
@@ -88,12 +95,18 @@ def main():
         if not output_path:
             output_path = '.'
 
-    if args.audiotag:
-        print(f"Using forced audio tag: {args.audiotag}")
-        pytube_list_audio_tag = args.audiotag
+    if args.audioItag:
+        print(f"Using forced audio tag: {args.audioItag}")
+        pytube_list_audio_tag = args.audioItag
     else:
         pytube_list_audio_tag = None
 
+    if args.audioForceItag:
+        pytube_first_audio_tag = True
+    else:
+        pytube_first_audio_tag = False
+
+    # use playlist if the URL contains a playlist identifier
     motif = r"\&list="
     res = re.search(motif, args.target)
     if res:
@@ -111,7 +124,7 @@ def main():
             """
             download_youtube_video(video.watch_url, output_path, output_filename)
     else:
-        download_youtube_video(args.target, output_path, output_filename, pytube_list_audio_tag)
+        download_youtube_video(args.target, output_path, output_filename, pytube_list_audio_tag, pytube_first_audio_tag)
 
 if __name__ == "__main__":
     main()

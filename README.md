@@ -60,3 +60,9 @@ pytubefix https://www.youtube.com/watch?v=XXX --list
 > ⚠️ It's not a problem to use a video source and not an audio source only. Just keep audio you need
 > Then run the download with this option :
 python ...\youtube-download.py -t  https://www.youtube.com/watch?v=XXX -at TAGID
+
+# V / force audio source original
+```bash
+pytubefix https://www.youtube.com/watch?v=XXX -af
+```
+> will keep the original first audio recorded
