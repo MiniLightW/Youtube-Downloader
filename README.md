@@ -59,7 +59,7 @@ py ./youtube-download.py -t 'https://www.youtube.com/watch?v=XXX&list=XXX'
 >
 > To fix this rare problem, use this tip
 
-### To download the highest resolution progressive stream:
+### To download the highest resolution progressive stream without this script
 ```bash
 pytubefix https://www.youtube.com/watch?v=XXX
 ```
@@ -86,3 +86,9 @@ python ...\youtube-download.py -t  https://www.youtube.com/watch?v=XXX -at TAGID
 ```bash
 pytubefix https://www.youtube.com/watch?v=XXX -af
 ```
+
+## Use optimized script with only one user answer
+### For normal video 
+> run this script : youtube-download_normal.ps1
+### For short video download
+> run this script : youtube-download_shorts.ps1

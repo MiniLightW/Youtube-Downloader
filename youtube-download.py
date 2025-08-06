@@ -58,8 +58,6 @@ def download_youtube_video(url, output_path='.', output_filename=None, audio_tag
                 raise ValueError(f"No audio stream found with tag '{audio_tag}'")
         print (f"[audio itag: {audio_stream.itag}]")
 
-        exit()
-
         # Download video and audio streams
         print(f"Downloading video: {yt.title}")
         video_filename = 'video.mp4'
