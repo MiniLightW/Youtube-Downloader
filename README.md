@@ -41,3 +41,22 @@ py ./youtube-download.py -t 'https://www.youtube.com/watch?v=XXX&list=XXX'
 
 # III / For developpers
 - [additionnal doc about pytubefix](https://korben.info/pytubefix-telechargement-videos-youtube-python.html)
+
+
+# IV / audio source forced mode
+# sometime almost all audio source are not the original but a translated version
+# only the progressive file has the good one but it's not considered as the "highest" quality
+# for fix this rare problem you have to use this tip
+## To download the highest resolution progressive stream:
+```bash
+pytubefix https://www.youtube.com/watch?v=XXX
+```
+> This give you the good audio but not the highest video
+> Now you have to find the tag if this source
+```bash
+pytubefix https://www.youtube.com/watch?v=XXX --list
+```
+> Keep the number value in "<Stream: itag="TAGID" mime_type...>" from the
+> ⚠️ It's not a problem to use a video source and not an audio source only. Just keep audio you need
+> Then run the download with this option :
+python ...\youtube-download.py -t  https://www.youtube.com/watch?v=XXX -at TAGID
