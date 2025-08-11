@@ -18,6 +18,12 @@ if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
     Pause
     Exit
 }
+# check if script path exists
+if (-not (Test-Path $ScriptPath)) {
+    Write-Host "The script path does not exist. Please check the path."
+    Pause
+    Exit
+}
 
 # show configuration
 Write-Host "Configuration :"
@@ -26,15 +32,20 @@ Write-Host "Script path is here   : $ScriptPath"
 Write-Host "!!! THIS SCRIPT IS FOR YOUTUBE NORMAL DOWNLOAD ONLY !!!"
 
 Write-Host "+---------------------------------------------------------------------+"
-$url = Read-Host "Entrez l'URL Youtube ou la playlist"
+$url = Read-Host "Write the Youtube URL or playlist"
+if ($url -eq "") {
+    Write-Host "No URL provided. Please run the script again and provide a valid URL."
+    Pause
+    Exit
+}
 
 # change directory
 Write-Host "Set-Location $OutPath"
 Set-Location $OutPath
 
 # execute download
-Write-Host "python $ScriptPath -t "$url""
-python $ScriptPath -t "$url"
+Write-Host "python $ScriptPath -t "$url"" -v
+python $ScriptPath -t "$url" -v
 
 Write-Host "+---------------------------------------------------------------------+"
 Write-Host ""

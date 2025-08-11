@@ -7,6 +7,8 @@ Download HD YouTube Videos
 - Probably only works on Windows
 
 This script will download & combine the highest quality audio & video files using pytubefix.
+You can also download all vidéos from a playlist.
+For downloading shorts videos use the PS script.
 
 ---
 
@@ -19,9 +21,14 @@ This script will download & combine the highest quality audio & video files usin
  choco install ffmpeg
 ```
 > then follow instruction with Yes or No...
-### 2- install pytubefix
-> pytube is no loger functionnal, we use pytubefix now :
+### 2- install python library(ies) from requirements.txt file
+> pytube is no loger functionnal, we use pytubefix now
+> you can rin the first command or the next proposed as you wish
 - open cmd in administrator and run this :
+```bash
+pip install -r requirements.txt
+```
+> instead of previous cmd you can only use this one to install pytubfix (the only package required for this project)
 ```bash
 pip install pytubefix
 ```
@@ -30,53 +37,51 @@ pip install pytubefix
 
 ## Quick run example
 > ⚠️ Please replace XXX in example by valid data from real Youtube URL
-### for only one video
+### with cmd
 ```bash
 py ./youtube-download.py -t https://www.youtube.com/shorts/XXX
 py ./youtube-download.py -t https://www.youtube.com/watch?v=XXX
+
+Exemples :
+# video with best quality (default usage)
+py ./youtube-download.py -t 'url'
+
+# video with best quality
+py ./youtube-download.py -t 'url' -v
+
+# video with 360p quality
+py ./youtube-download.py -t 'url' -v -q '360p'
+
+# video with chosen quality inside the script
+py ./youtube-download.py -t 'url' -v -q '?'
+
+# video short
+py ./youtube-download.py -t 'url' -v -s
+
+# video short with 360p quality
+py ./youtube-download.py -t 'url' -v -s -q '360p'
+
+# video with chosen quality inside the script
+py ./youtube-download.py -t 'url' -v -q '?'
+
+# audio to mp3
+py ./youtube-download.py -t 'url' -mp3
 ```
-### for a full playlist :
-> ⚠️ String ' is required
-```bash
-py ./youtube-download.py -t 'https://www.youtube.com/watch?v=XXX&list=XXX'
-```
-### for all :
+### for easier use :
 > Use the PowerShell Script ! (update inside config first)
 
 ---
 
 ## For developpers
 
-- [additionnal doc about pytubefix](https://korben.info/pytubefix-telechargement-videos-youtube-python.html)
+- [doc about pytubefix github](https://github.com/JuanBindez/pytubefix)
+- [doc about pytubefix korben](https://korben.info/pytubefix-telechargement-videos-youtube-python.html)
 
 ---
-
-## Audio source forced mode
-
-> sometimes almost all audio source are not the original but a translated version
->
-> only the progressive file has the good one but it's not considered as the "highest" quality
->
-> To fix this rare problem, use this tip
 
 ### To download the highest resolution progressive stream without this script
 ```bash
 pytubefix https://www.youtube.com/watch?v=XXX
-```
-> This give you the correct audio but not the highest video
-
-### Get the itag
-> Now you have to find the tag if this source
-```bash
-pytubefix https://www.youtube.com/watch?v=XXX --list
-```
-> Keep the number value in "<Stream: itag="TAGID" mime_type...>" from the result
->
-> ⚠️ It's not a problem to use a video source and not an audio source only. Just keep audio you need
->
-> Then run the download with this option :
-```bash
-python ...\youtube-download.py -t  https://www.youtube.com/watch?v=XXX -at TAGID
 ```
 
 ---
@@ -88,7 +93,9 @@ pytubefix https://www.youtube.com/watch?v=XXX -af
 ```
 
 ## Use optimized script with only one user answer
-### For normal video 
-> run this script : youtube-download_normal.ps1
+### For normal video
+> run this script : youtube-download_video_BestQuality.ps1
 ### For short video download
-> run this script : youtube-download_shorts.ps1
+> run this script : youtube-download_video_shorts.ps1
+### For short audio download
+> run this script : youtube-download_audio.ps1
