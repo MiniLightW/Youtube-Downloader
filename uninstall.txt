@@ -1,0 +1,6 @@
+for uninstall this program on windows :
+1- uninstall FFmpeg :
+    => do this only if this program is not used by another one...
+    go to application installed
+    and choose to uninstall FFmpeg
+2- remove this directory

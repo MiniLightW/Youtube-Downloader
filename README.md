@@ -2,29 +2,45 @@
 
 Download HD YouTube Videos
 
+The script need following packages
+- Python 3+
 - Requires [ffmpeg](https://www.ffmpeg.org/download.html) to be installed on your computer
 - Requires [pytubefix](https://github.com/JuanBindez/pytubefix) as python installed library
-- Probably only works on Windows
+
+> Only tested on Windows
 
 This script will download & combine the highest quality audio & video files using pytubefix.
-You can also download all vidéos from a playlist.
-For downloading shorts videos use the PS script.
+You can also :
+- download all vidéos from a playlist.
+- download audio only (output format : mp3)
 
 ---
 
-## Quick INSTALL (check URL data if doens't work anymore)
-*procedure for windows only*
+## Quick INSTALL
 
-### 1- install ffmpeg
-> Open cmd in administrator and run this :
+### FOR ALL INSTALL
+python 3 must be installed before other actions
+> download it from official packages here : https://www.python.org/downloads/
+> update $PATH on Windows
+> restart cmd 
+
+### INSTALL FOR WINDOWS
+> run the install.ps1 script by right clic on the file and choose "execute with PowerShell"
+> follow the script and reply when it's required
+
+### INSTALL FOR UNIX
+
+> usage of virtual env strongly recommanded but not described here
+
+#### 1- install ffmpeg
+> ex : ubuntu :
 ```bash
- choco install ffmpeg
+ sudo apt install ffmpeg
 ```
-> then follow instruction with Yes or No...
-### 2- install python library(ies) from requirements.txt file
+
+#### 2- install python library(ies) from requirements.txt file
 > pytube is no loger functionnal, we use pytubefix now
-> you can rin the first command or the next proposed as you wish
-- open cmd in administrator and run this :
+> you can run the first command or the next proposed as you wish
 ```bash
 pip install -r requirements.txt
 ```
@@ -39,36 +55,54 @@ pip install pytubefix
 > ⚠️ Please replace XXX in example by valid data from real Youtube URL
 ### with cmd
 ```bash
+# linux
 py ./youtube-download.py -t https://www.youtube.com/shorts/XXX
 py ./youtube-download.py -t https://www.youtube.com/watch?v=XXX
+py ./youtube-download.py -t https://www.youtube.com/watch?v=XXX&list=XXX&index=X
+# cmd / PS / windows
+py ./youtube-download.py -t "https://www.youtube.com/shorts/XXX"
+py ./youtube-download.py -t "https://www.youtube.com/watch?v=XXX"
+py ./youtube-download.py -t "https://www.youtube.com/watch?v=XXX&list=XXX&index=X"
 
-Exemples :
+# [ Exemples ]
+
+# FIRST ACTIVATE VIRTUAL ENV
+# >>> this is windows example <<<
+.\venv\Scripts\Activate.ps1
+
 # video with best quality (default usage)
-py ./youtube-download.py -t 'url'
+py ./youtube-download.py -t "url"
 
 # video with best quality
-py ./youtube-download.py -t 'url' -v
+py ./youtube-download.py -t "url" -v
 
 # video with 360p quality
-py ./youtube-download.py -t 'url' -v -q '360p'
+py ./youtube-download.py -t "url" -v -q '360p'
 
 # video with chosen quality inside the script
-py ./youtube-download.py -t 'url' -v -q '?'
+py ./youtube-download.py -t "url" -v -q '?'
 
 # video short
-py ./youtube-download.py -t 'url' -v -s
+py ./youtube-download.py -t "url" -v -s
 
 # video short with 360p quality
-py ./youtube-download.py -t 'url' -v -s -q '360p'
+py ./youtube-download.py -t "url" -v -s -q '360p'
 
 # video with chosen quality inside the script
-py ./youtube-download.py -t 'url' -v -q '?'
+py ./youtube-download.py -t "url" -v -q '?'
 
 # audio to mp3
-py ./youtube-download.py -t 'url' -mp3
+py ./youtube-download.py -t "url" -mp3
 ```
+
 ### for easier use :
-> Use the PowerShell Script ! (update inside config first)
+> Use the PowerShell Scripts ! (update inside config first)
+#### For normal video
+> run this script : youtube-download_video_BestQuality.ps1
+#### For short video download
+> run this script : youtube-download_video_shorts.ps1
+#### For short audio download
+> run this script : youtube-download_audio.ps1
 
 ---
 
@@ -91,11 +125,3 @@ pytubefix https://www.youtube.com/watch?v=XXX
 ```bash
 pytubefix https://www.youtube.com/watch?v=XXX -af
 ```
-
-## Use optimized script with only one user answer
-### For normal video
-> run this script : youtube-download_video_BestQuality.ps1
-### For short video download
-> run this script : youtube-download_video_shorts.ps1
-### For short audio download
-> run this script : youtube-download_audio.ps1
