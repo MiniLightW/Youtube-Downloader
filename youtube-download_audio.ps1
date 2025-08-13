@@ -1,20 +1,13 @@
 ######################################################################################
 # usage : only copy past url required, better use for casuals users
 ######################################################################################
-
-# custom section : set path
-$OutPath = "$env:HOMEDRIVE$env:HOMEPATH\Downloads\Youtube-Downloader"
-# end custom section
-
-$ProjectPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$ScriptPath = Join-Path $ProjectPath "youtube-download.py"
-$VenvPath = Join-Path $ProjectPath "venv"
-$activate = Join-Path $VenvPath "Scripts\Activate.ps1"
-
-######################################################################################
 # script section 
 ######################################################################################
 
+# load config
+. "$PSScriptRoot\youtube-download_config.ps1"
+
+# start script
 Write-Host "+---------------------------------------------------------------------+"
 # check if python is installed
 if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
@@ -28,7 +21,6 @@ if (-not (Test-Path $ScriptPath)) {
     Pause
     Exit
 }
-
 # Check if output path exists, if not create it
 if (-not (Test-Path $OutPath)) {
     New-Item -ItemType Directory -Path $OutPath | Out-Null
