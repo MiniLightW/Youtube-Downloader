@@ -5,7 +5,7 @@
 ######################################################################################
 
 # load config
-. "$PSScriptRoot\youtube-download_config_and_env.ps1"
+. "$PSScriptRoot\PS_config_and_env.ps1"
 
 # show configuration
 Write-Host "+---------------------------------------------------------------------+"

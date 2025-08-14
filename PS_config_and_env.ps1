@@ -9,7 +9,9 @@ $OutPath = "$env:HOMEDRIVE$env:HOMEPATH\Downloads\Youtube-Downloader"
 # end custom section
 
 $ProjectPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
-$ScriptPath = Join-Path $ProjectPath "youtube-download.py"
+$ScriptPath     = Join-Path $ProjectPath "youtube-download.py"
+$ScriptSubPath  = Join-Path $ProjectPath "youtube-download-sub.py"
+$ScriptTradPath = Join-Path $ProjectPath "text_translator.py"
 $VenvPath = Join-Path $ProjectPath "venv"
 $activate = Join-Path $VenvPath "Scripts\Activate.ps1"
 
@@ -28,6 +30,18 @@ if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
 }
 # check if script path exists
 if (-not (Test-Path $ScriptPath)) {
+    Write-Host "The script path does not exist. Please check the path."
+    Pause
+    Exit
+}
+# check if script path exists
+if (-not (Test-Path $ScriptSubPath)) {
+    Write-Host "The script path does not exist. Please check the path."
+    Pause
+    Exit
+}
+# check if script path exists
+if (-not (Test-Path $ScriptTradPath)) {
     Write-Host "The script path does not exist. Please check the path."
     Pause
     Exit

@@ -5,14 +5,14 @@
 ######################################################################################
 
 # load config and env
-. "$PSScriptRoot\youtube-download_config_and_env.ps1"
+. "$PSScriptRoot\PS_config_and_env.ps1"
 
 # show configuration
 Write-Host "+---------------------------------------------------------------------+"
 Write-Host "Configuration :"
 Write-Host "Output folder is here : $OutPath"
 Write-Host "Script path is here   : $ScriptPath"
-Write-Host "!!! THIS SCRIPT IS FOR YOUTUBE NORMAL DOWNLOAD ONLY !!!"
+Write-Host "THIS SCRIPT IS FOR YOUTUBE SUBTITLE DOWNLOAD AND TRANSLATE ONLY"
 Write-Host "+---------------------------------------------------------------------+"
 $url = Read-Host "Write the Youtube URL or playlist"
 if ($url -eq "") {
@@ -20,23 +20,21 @@ if ($url -eq "") {
     Pause
     Exit
 }
-# Check if output path exists, if not create it
-if (-not (Test-Path $OutPath)) {
-    New-Item -ItemType Directory -Path $OutPath | Out-Null
-    if (-not (Test-Path $OutPath)) {
-        Write-Host "Failed to create output directory. Please check your permissions."
-        Pause
-        Exit
-    }
-}
 
 # change directory
 Write-Host "Set-Location $OutPath"
 Set-Location $OutPath
 
 # execute download
-Write-Host "python $ScriptPath -t "$url" -v"
-python $ScriptPath -t "$url" -v
+Write-Host "py $ScriptSubPath -t "$url" -l "fr"" 
+py $ScriptSubPath -t "$url" -l "fr"
+
+# check
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Error : $LASTEXITCODE"
+    Pause
+    Exit
+}
 
 Write-Host "+---------------------------------------------------------------------+"
 Write-Host ""

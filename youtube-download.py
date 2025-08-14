@@ -8,18 +8,15 @@ You can use playlists
 """
 
 import argparse
+import os
+import re
+from datetime import datetime
 from pytubefix import YouTube
 from pytubefix import Playlist
 from pytubefix.cli import on_progress
-import os
-import re
+from utils import get_from_keyboard
+from utils import sanitize_filename
 
-def sanitize_filename(filename):
-    # Replace non authorized characters with nothing
-    str = re.sub(r'[^\w\d\s\-_,!\[\]<>\'()+]', '', filename)
-    # only one space between words
-    str = re.sub(r'\s+', ' ', str)
-    return str
 
 def ensure_mp4_extension(filename):
     # Add '.mp4' extension if not present
@@ -27,13 +24,6 @@ def ensure_mp4_extension(filename):
         filename += '.mp4'
     return filename
 
-def get_from_keyboard(prompt):
-    try:
-        x = input(prompt)
-        return (x)
-    except KeyboardInterrupt:
-        print("\nAborting by user (Ctrl+C).")
-        exit(0)
 
 def select_value(valid_list):
     x = "-"
@@ -41,6 +31,7 @@ def select_value(valid_list):
         x = get_from_keyboard(f"Please choose a value from the list (ex: write {valid_list[0]}) :")
         print(type(x))
     return x
+
 
 def streamfilter (streams, type, res):
     # res specific : short
@@ -89,12 +80,14 @@ def streamfilter (streams, type, res):
     
     return stream
 
+
 def convert_to_mp3(input_file, output_file):
     # convert audio .m4a to .mp3
     print("Converting file to mp3...")
     os.system(f'ffmpeg -i "{input_file}" -c:v copy -c:a libmp3lame -q:a 4 "{output_file}"')
     os.remove(input_file)
     print(f"Converted to MP3 and saved as '{output_file}'")
+
 
 def get_available_video_resolutions(streams):
     # return list of available video resolutions
@@ -106,6 +99,7 @@ def get_available_video_resolutions(streams):
     for res in avr:
         print(f"- {res}")
     return avr
+
 
 def get_available_audio_abr(streams):
     # return list of available audio abr
@@ -119,6 +113,7 @@ def get_available_audio_abr(streams):
         print(f"- {abr}")
     return aaa
 
+
 def get_source_yt(url):
     # Get the YouTube object from the URL
     try:
@@ -127,6 +122,7 @@ def get_source_yt(url):
     except Exception as e:
         print(f"Error fetching YouTube object: {e}")
         exit(1)
+
 
 def download_youtube_audio(url, output_dir, output_filename=None, quality=None):
 
@@ -140,7 +136,7 @@ def download_youtube_audio(url, output_dir, output_filename=None, quality=None):
             audio_stream = streamfilter(yt.streams, 'audio', 'high')
 
         # Determine the output filename
-        output_filename_init    = sanitize_filename(yt.title) + ".m4a"
+        output_filename_init = sanitize_filename(yt.title) + ".m4a"
         if output_filename is None:
             output_filename_final = sanitize_filename(yt.title) + ".mp3"
         else:
@@ -159,6 +155,7 @@ def download_youtube_audio(url, output_dir, output_filename=None, quality=None):
 
     except Exception as e:
         print(f"Error: {e}")
+
 
 def download_youtube_video(url, output_dir='.', output_filename=None, quality=None, short=None):
 
@@ -208,22 +205,26 @@ def download_youtube_video(url, output_dir='.', output_filename=None, quality=No
     except Exception as e:
         print(f"Error: {e}")
 
+
 def main():
     parser = argparse.ArgumentParser(description="Download YouTube videos and playlist, convert video audio to mp3")
-    parser.add_argument("-t",   "--target",  help="URL of the YouTube video", required=True)
-    parser.add_argument("-o",   "--output",  help="Optional output path", required=False)
-    parser.add_argument("-mp3", "--toMp3",   help="Get audio with mp3", action='store_true')
-    parser.add_argument("-v",   "--video",   help="Get video", action='store_true')
-    parser.add_argument("-s",   "--short",   help="Use it for getting specific short video (sound difference)", action='store_true')
-    parser.add_argument("-q",   "--quality", help="Resolution of the video, use '?' value for choose among list yourself", required=False)
+    parser.add_argument("-t"  , "--target" , help="URL of the YouTube video", required=True)
+    parser.add_argument("-o"  , "--output" , help="Optional output path", required=False)
+    parser.add_argument("-mp3", "--toMp3"  , help="Get audio with mp3", action='store_true')
+    parser.add_argument("-v"  , "--video"  , help="Get video", action='store_true')
+    parser.add_argument("-s"  , "--short"  , help="Use it for getting specific short video (sound difference)", action='store_true')
+    parser.add_argument("-q"  , "--quality", help="Resolution of the video, use '?' value for choose among list yourself", required=False)
 
     args = parser.parse_args()
+
     # If the output argument is provided, split it into path and filename
     output_dir, output_filename = '.', None
     if args.output:
         output_dir, output_filename = os.path.split(args.output)
-        if not output_dir:
-            output_dir = '.'
+    # directory name for current run
+    d = datetime.now()
+    time = d.strftime("%d%m%Y_%H%M%S_%f")
+    output_dir = os.path.join(output_dir, time)
 
     if not args.video and not args.toMp3:
         args.video = True
@@ -254,6 +255,27 @@ def main():
         if args.video:
             download_youtube_video(args.target, output_dir, output_filename, args.quality, args.short)
 
+
 if __name__ == "__main__":
     print("### RUNNING : " + os.path.basename(__file__) + " ###")
     main()
+
+
+'''
+# execution via un programme externe
+import subprocess
+# Appelle un autre script Python (par exemple, text_translator.py)
+result = subprocess.run(
+    ["python", "text_translator.py", "-t", "fichier.txt", "-l", "fr"],
+    capture_output=True, text=True
+)
+print("Sortie du script :", result.stdout)
+
+# via appel du main (attention à la gestion des arguments...)
+import text_translator
+text_translator.main()
+
+
+traitement résumé :
+https://hackernoon.com/lang/fr/construire-un-analyseur-de-documents-avec-chatgpt-google-cloud-et-python
+'''
