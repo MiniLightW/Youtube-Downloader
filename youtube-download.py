@@ -260,22 +260,3 @@ if __name__ == "__main__":
     print("### RUNNING : " + os.path.basename(__file__) + " ###")
     main()
 
-
-'''
-# execution via un programme externe
-import subprocess
-# Appelle un autre script Python (par exemple, text_translator.py)
-result = subprocess.run(
-    ["python", "text_translator.py", "-t", "fichier.txt", "-l", "fr"],
-    capture_output=True, text=True
-)
-print("Sortie du script :", result.stdout)
-
-# via appel du main (attention à la gestion des arguments...)
-import text_translator
-text_translator.main()
-
-
-traitement résumé :
-https://hackernoon.com/lang/fr/construire-un-analyseur-de-documents-avec-chatgpt-google-cloud-et-python
-'''

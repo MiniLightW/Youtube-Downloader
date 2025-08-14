@@ -1,6 +1,5 @@
 # utils.py
 import re
-import os
 
 
 def get_from_keyboard(prompt):

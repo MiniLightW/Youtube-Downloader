@@ -1,5 +1,5 @@
 # Youtube-Downloader - Configuration Script
-
+# This script sets up the environment for the Youtube-Downloader project
 
 Write-Host "+---------------------------------------------------------------------+"
 Write-Host "Loading config..."
@@ -16,7 +16,6 @@ $VenvPath = Join-Path $ProjectPath "venv"
 $activate = Join-Path $VenvPath "Scripts\Activate.ps1"
 
 Write-Host "Loading config : OK"
-
 
 # Youtube-Downloader - Check Environment
 Write-Host "+---------------------------------------------------------------------+"
